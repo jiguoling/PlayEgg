@@ -1,6 +1,7 @@
 package com.zony.playeggs;
 
 import com.nineoldandroids.animation.TimeAnimator;
+import com.nineoldandroids.view.ViewHelper;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,7 +11,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.Random;
-
+/**
+ * 彩蛋动画
+ *
+ */
 public class Board extends FrameLayout {
     // 控制数量
     public static final int NUM_CATS = 30;
@@ -75,8 +79,8 @@ public class Board extends FrameLayout {
             measure(0, 0);
             float x = randfrange(0, Board.this.getWidth() - scale * getMeasuredWidth());
             float y = randfrange(0, Board.this.getHeight() - scale * getMeasuredHeight());
-            setX(x);
-            setY(y);
+            ViewHelper.setX(this, x);
+            ViewHelper.setY(this, y);
             v = lerp(VMIN, VMAX, z);
         }
 
@@ -86,11 +90,11 @@ public class Board extends FrameLayout {
          */
         public void update(float dt) {
             // 根据Y轴漂移
-            float y = getY() + v * dt;
+            float y = ViewHelper.getY(this) + v * dt;
             if (y > board.getHeight()) {
                 board.removeView(this);
             }else {
-                setY(y);
+                ViewHelper.setY(this, y);
             }
         }
     }
